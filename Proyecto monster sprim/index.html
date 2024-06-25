@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronómetro Regresivo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="particle-js" ></div>
+
+  <div class="contenedorPrincipal">
+    <div class="SerieLogos">
+      <img src="logos/Logos Finales/Logo monster2.jpg">
+      <!--  <img src="logos/Logos Finales/Digimon.png">
+      <img src="logos/Logos Finales/Lorcana.png">
+      <img src="logos/Logos Finales/Magic.png">
+      <img src="logos/Logos Finales/Yugi.png">
+      <img src="logos/Logos Finales/Pokemon.png">
+      <img src="logos/Logos Finales/OnePiece.png">-->
+    </div>
+
+
+    <div id="mainContent" style="margin-top: 80px;">
+
+      <!--<div class="PrimerosBotones" id="PrimerosBotones">
+        <button onclick="addMinute()">+1 min</button>
+        <button onclick="subtractMinute()">-1 min</button>
+       
+
+         <button onclick="addFiveMinutes()">+5 min</button>
+    <button onclick="subtractFiveMinutes()">-5 min</button>
+
+     <button onclick="addSecond()">+1 seg</button>
+    <button onclick="subtractSecond()">-1 seg</button>
+        
+      </div>
+-->
+<div class="Añadir10Min" >
+  <button onclick="addTenMinutes()">+10 min</button>
+    <button onclick="subtractTenMinutes()">-10 min</button>
+    <button onclick="addMinute()">+1 min</button>
+    <button onclick="subtractMinute()">-1 min</button>
+   
+</div>
+
+      <div class="clock">
+       
+        <!--<span id="hours">00</span>:-->
+        <span id="minutes">00</span>:
+        <span id="seconds">00</span>
+      </div>
+     
+    
+      <div class="setLimit">
+        <button onclick="startTimer()">Iniciar</button>
+        <button onclick="pauseTimer()">Pausar</button>
+        <button onclick="resetTimer()">Reiniciar</button>
+      </div>
+    </div>
+    
+    <div class="SerieLogos2">
+      <img src="logos/Logos Finales/Logo monster2.jpg">
+      <!--<img src="logos/Logos Finales/Digimon.png">
+      <img src="logos/Logos Finales/Lorcana.png">
+      <img src="logos/Logos Finales/Magic.png">
+      <img src="logos/Logos Finales/Yugi.png">
+      <img src="logos/Logos Finales/Pokemon.png">
+      <img src="logos/Logos Finales/OnePiece.png">-->
+    </div>
+  </div>
+
+
+
+  <audio id="startSound" src="Sonidos/SonidoInicioVolin.mp3"></audio>
+  <audio id="10SecondsSound" src="Sonidos/TEmporizador10segundos.mp3"></audio>
+  <audio id="finishSound" src="sonidoDeRondaEnd.mp3"></audio>
+
+  <script>
+    let timer;
+    let limitMinutes;
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
+
+    function startTimer() {
+      if (limitMinutes === undefined) {
+        alert("Por favor establece un tiempo límite primero.");
+        return;
+      }
+      timer = setInterval(updateTimer, 1000);
+      playSound('startSound');
+    }
+
+    function pauseTimer() {
+      clearInterval(timer);
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      hours = 0;
+      minutes = 0;
+      seconds = 0;
+      updateDisplay();
+    }
+
+    function updateTimer() {
+      seconds--;
+      if (seconds < 0) {
+        seconds = 59;
+        minutes--;
+        if (minutes < 0) {
+          minutes = 59;
+          hours--;
+          if (hours < 0) {
+            playFinishSound();
+            clearInterval(timer);
+            playFinishSound();
+            alert("¡Tiempo cumplido!");
+            return;
+          }
+        }
+      }
+      if (minutes === 0 && seconds === 0) { // Cambiado de 10 a 0
+        playFinishSound();
+      }
+      if (minutes === 0 && seconds === 10) {
+        playSound('10SecondsSound');
+      }
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      const hoursDisplay = padTime(hours);
+      const minutesDisplay = padTime(minutes);
+      const secondsDisplay = padTime(seconds);
+      //document.getElementById('hours').textContent = hoursDisplay;
+      document.getElementById('minutes').textContent = minutesDisplay;
+      document.getElementById('seconds').textContent = secondsDisplay;
+    }
+
+    function padTime(time) {
+      return (time < 10 ? '0' : '') + time;
+    }
+
+    function setLimit() {
+      limitMinutes = parseInt(document.getElementById('hours').textContent) * 60 +
+                     parseInt(document.getElementById('minutes').textContent);
+    }
+
+    function addMinute() {
+      minutes++;
+      limitMinutes++;
+      updateDisplay();
+    }
+
+    function subtractMinute() {
+      if (minutes > 0) {
+        minutes--;
+        limitMinutes--;
+        updateDisplay();
+      }
+    }
+
+    function addSecond() {
+      seconds++;
+      if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+      }
+      if (minutes >= 60) {
+        minutes = 0;
+        hours++;
+      }
+      limitMinutes++;
+      updateDisplay();
+    }
+
+    function subtractSecond() {
+      if (seconds > 0) {
+        seconds--;
+      } else if (minutes > 0) {
+        seconds = 59;
+        minutes--;
+      } else if (hours > 0) {
+        minutes = 59;
+        hours--;
+      }
+      limitMinutes--;
+      updateDisplay();
+    }
+
+    function addTenMinutes() {
+      minutes += 10;
+      limitMinutes += 10;
+      updateDisplay();
+    }
+
+    function subtractTenMinutes() {
+      if (minutes >= 10) {
+        minutes -= 10;
+        limitMinutes -= 10;
+        updateDisplay();
+      }
+    }
+
+    function addFiveMinutes() {
+      minutes += 5;
+      limitMinutes += 5;
+      updateDisplay();
+    }
+
+    function subtractFiveMinutes() {
+      if (minutes >= 5) {
+        minutes -= 5;
+        limitMinutes -= 5;
+        updateDisplay();
+      }
+    }
+
+    function playSound(soundId) {
+      document.getElementById(soundId).play();
+    }
+
+    function playFinishSound() {
+      const finishSound = new Audio('finish_sound.mp3');
+      finishSound.play();
+    }
+  </script>
+
+<script src="particles.min.js"></script>
+<script>
+  particlesJS('particle-js', {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#08dc5f"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 6,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "repulse"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });
+</script>
+
+</footer>
+
+</body>
+</html>
+

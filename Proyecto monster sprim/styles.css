@@ -1,0 +1,155 @@
+@font-face {
+  font-family: 'miFuentePersonalizada';
+  src: url('Fuentes/DS-DIGI.TTF') format('truetype'),
+       url('Fuentes/DS-DIGIB.TTF') format('truetype'),
+       url('Fuentes/DS-DIGII.TTF') format('truetype'),
+       url('Fuentes/DS-DIGIT.TTF') format('truetype');
+}
+
+
+/* Estilos para contenedor principal */
+#mainContent {
+  width: 100%;
+  grid-column: span 1;
+}
+
+/* Estilos para los contenedores de logos */
+.SerieLogos, .SerieLogos2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  animation: flip;
+  animation-duration: 3s;
+  width: 100%;
+}
+
+.SerieLogos img, .SerieLogos2 img {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+}
+
+/* Estilos para el contenedor principal */
+.contenedorPrincipal {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+/* Estilos para el reloj */
+.clock {
+  font-family: 'miFuentePersonalizada', Arial, sans-serif;
+  width: 100%;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  
+  margin: 0;
+  font-size: 10em;
+  animation: flipInX 2s;
+  position: relative;
+  height: fit-content;
+}
+
+/* Estilos para botones */
+button {
+  font-family: 'miFuentePersonalizada', Arial, sans-serif;
+  margin-top: 0px;
+  padding: 5px .2px;
+  font-size: 2.5em;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  background-color: #3e8e41;
+}
+
+input[type="number"] {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Estilos para los contenedores de logos en diferentes resoluciones */
+.logos1, .logos2 {
+  height: 300px;
+  width: 100px;
+  animation-duration: 3s;
+}
+
+.logos1 {
+  position: fixed;
+  animation-name: backInRight;
+  right: 0;
+}
+
+.logos2 {
+  position: fixed;
+  animation-name: backInLeft;
+  left: 0;
+}
+
+body{
+  background-color: black;
+}
+
+
+/* Media query para proyectores */
+/* Media query para proyectores */
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  .contenedorPrincipal {
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+  }
+  .clock {
+    font-size: 6em;
+  }
+
+  button {
+    font-size: 1em;
+  }
+
+  .mainContent{
+    margin-top: 80px;
+  }
+}
+/* Media query para proyectores */
+/* Media query para proyectores */
+
+
+@media screen and (max-width: 768px) {
+  .contenedorPrincipal {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+  }
+
+  .clock {
+    font-size: 4em; /* Reducir el tamaño de la fuente del reloj en pantallas pequeñas */
+  }
+
+  button {
+    padding: 8px 16px; /* Ajustar el espacio interno del botón en pantallas pequeñas */
+    font-size: 1.5em; /* Reducir el tamaño de la fuente del botón en pantallas pequeñas */
+  }
+}
+
+#particle-js {
+  background-color: black;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}

@@ -1,0 +1,211 @@
+@font-face {
+  font-family: 'miFuentePersonalizada';
+  src: url('Fuentes/DS-DIGI.TTF') format('truetype'),
+       url('Fuentes/DS-DIGIB.TTF') format('truetype'),
+       url('Fuentes/DS-DIGII.TTF') format('truetype'),
+       url('Fuentes/DS-DIGIT.TTF') format('truetype');
+}
+
+
+/* Estilos para contenedor principal */
+#mainContent {
+  width: 100%;
+  grid-column: span 1;
+}
+
+/* Estilos para los contenedores de logos */
+.SerieLogos, .SerieLogos2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  animation: flip;
+  animation-duration: 3s;
+}
+
+.SerieLogos img, .SerieLogos2 img {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+}
+
+/* Estilos para el contenedor principal */
+.contenedorPrincipal {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Estilos para el reloj */
+.clock {
+  font-family: 'miFuentePersonalizada', Arial, sans-serif;
+  width: 100%;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  
+  margin: 0;
+  font-size: 4em;
+  animation: flipInX 2s;
+  position: relative;
+  height: fit-content;
+}
+
+/* Estilos para botones */
+button {
+  font-family: 'miFuentePersonalizada', Arial, sans-serif;
+  margin-top: 0px;
+  padding: 5px .2px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  background-color: #3e8e41;
+}
+
+input[type="number"] {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Estilos para los contenedores de logos en diferentes resoluciones */
+.logos1, .logos2 {
+  height: 300px;
+  width: 100px;
+  animation-duration: 3s;
+}
+
+.logos1 {
+  position: fixed;
+  animation-name: backInRight;
+  right: 0;
+}
+
+.logos2 {
+  position: fixed;
+  animation-name: backInLeft;
+  left: 0;
+}
+
+/* Media query para teléfonos celulares */
+@media (max-width: 300px) and (max-height: 800px) {
+  .setLimit {
+    display: block;
+    position: static;
+    top: auto;
+    left: auto;
+    margin: 10px auto;
+    animation: fadeIn 3s;
+  }
+
+  .logos1, .logos2 {
+    height: 370px;
+    width: 120px;
+  }
+
+  .clock {
+    font-size: 4em;
+  }
+}
+
+/* Media query para pantallas normales */
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+  .logos1, .logos2 {
+    height: 700px;
+    width: 150px;
+    position: fixed;
+    animation-duration: 3s;
+  }
+
+  .logos1 {
+    animation-name: backInRight;
+    right: 0;
+  }
+
+  .logos2 {
+    animation-name: backInLeft;
+    left: 0;
+  }
+
+  .primerosBotones button {
+    padding: 10px 4px;
+    font-size: 40px;
+  }
+}
+
+/* Media query para proyectores */
+@media only screen and (min-width: 1201px) {
+  .contenedor {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logos1, .logos2 {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .logos2 {
+    justify-self: end;
+  }
+}
+
+/* Media query para iPads */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .clock {
+     /* Ajuste de altura fija para iPads */
+    font-size: 4em; /* Ajuste de tamaño de fuente para iPads */
+    height: fit-content;
+  }
+}
+
+/* Media query para pantallas pequeñas */
+@media only screen and (max-width: 768px) {
+  .clock {
+    font-size: 3em; /* Reducir el tamaño de fuente para pantallas pequeñas */
+    margin-bottom: 10px; /* Ajustar el margen inferior */
+    height: fit-content;
+  }
+
+  .PrimerosBotones,
+  .Añadir10Min,
+  .setLimit {
+    margin-top: 20px; /* Ajustar el margen superior para dar espacio al reloj reducido */
+  }
+}
+
+/* Media query para pantallas pequeñas en orientación vertical */
+@media only screen and (max-width: 600px) and (orientation: portrait) {
+  .clock {
+    font-size: 2em;
+    margin-bottom: auto;
+    height: auto;
+    transform: scaleY(1.5);
+    line-height: 1.5;
+  }
+}
+
+body{
+  background-color: black;
+}
+@media only screen and (max-width: 768px) and (orientation: landscape) {
+  .clock {
+    font-size: 3em; /* Ajuste de tamaño de fuente para orientación horizontal en dispositivos móviles */
+    margin-bottom: 10px; /* Ajustar el margen inferior */
+    max-height: 25vh; /* Limitar la altura máxima del reloj */
+    height: fit-content;
+  }
+}
